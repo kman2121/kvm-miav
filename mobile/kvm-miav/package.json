@@ -1,0 +1,22 @@
+{
+  "name": "kvm-miav",
+  "version": "0.0.0",
+  "description": "Man in a Van mobile app",
+  "author": "Kirollos Morkos, Vijay Pillai, Derek Netto",
+  "private": true,
+  "main": "App.js",
+  "scripts": {
+    "start": "react-native-scripts start",
+    "eject": "react-native-scripts eject",
+    "android": "react-native-scripts android",
+    "ios": "react-native-scripts ios",
+    "test": "node node_modules/jest/bin/jest.js --watch"
+  },
+  "dependencies": {
+    "expo": "^22.0.0",
+    "react": "16.0.0-beta.5",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-22.0.1.tar.gz",
+    "react-native-maps": "^0.17.1",
+    "react-native-tab-view": "^0.0.70"
+  }
+}
