@@ -1,3 +1,6 @@
 node_modules/**/*
 .expo/*
 npm-debug.*
+yarn.lock
+package.lock
+package-lock.json
