@@ -33,17 +33,17 @@ jobs:
             cd backend/miavbackend
             echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > ${HOME}/gcloud-service-key.json
             # Make sure gcloud is up to date
-            sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update
+            gcloud --quiet components update
             # authenticate gcloud
-            sudo /opt/google-cloud-sdk/bin/gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
+            gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
             # Replace <your-project-id>
-            sudo /opt/google-cloud-sdk/bin/gcloud config set project $GCLOUD_PROJECT
+            gcloud config set project $GCLOUD_PROJECT
             
       - run:
           name: deploy
           command: |
             cd backend/miavbackend
-            sudo /opt/google-cloud-sdk/bin/gcloud -q preview app deploy app.yaml --promote --version=1
+            gcloud -q preview app deploy app.yaml --promote --version=1
 
       - save_cache:
           paths:
