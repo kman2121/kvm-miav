@@ -5,7 +5,7 @@ import {
 	View
 } from 'react-native';
 
-export class MoveRequest extends React.Component {
+export class JunkRequest extends React.Component {
 	render() {
 		return (
 			<View style={styles.container}>

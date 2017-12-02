@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
-export class JunkRequest extends React.Component {
+export class MoveRequest extends React.Component {
 	state = {
 		rooms: 0,
 		isDateTimePickerVisible: false,
