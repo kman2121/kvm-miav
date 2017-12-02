@@ -20,8 +20,8 @@ import { MiniMap,
    width: Dimensions.get('window').width,
  };
 
-const FirstRoute = () => (<JunkRequest />);
-const SecondRoute = () => (<MoveRequest />)
+const FirstRoute = () => (<MoveRequest />);
+const SecondRoute = () => (<JunkRequest />);
 
 export class EnterJobScreen extends React.PureComponent {
   state = {
