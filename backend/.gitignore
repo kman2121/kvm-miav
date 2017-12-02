@@ -1,0 +1,5 @@
+**/.vscode
+CS5356-MIAV-*.json
+cs5356-miav-*
+static/
+db.sqlite3
