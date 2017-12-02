@@ -6,7 +6,8 @@ import {
   EnterCodeScreen,
   EnterJobScreen,
   EnterPhoneScreen,
-  SearchingScreen
+  SearchingScreen,
+  PickUserScreen
 } from './containers';
 
 class ScreenEnum {
@@ -14,6 +15,7 @@ class ScreenEnum {
   static ENTER_CODE  = 'ec';
   static ENTER_JOB   = 'ej';
   static SEARCHING   = 'sr';
+  static PICK_USER = 'pu';
 }
 
 export default class App extends React.Component {
@@ -46,9 +48,29 @@ export default class App extends React.Component {
     setTimeout(() => {
         this.setState({
           isLoading: false,
-          screen: ScreenEnum.ENTER_JOB,
+          screen: ScreenEnum.PICK_USER,
         });
     }, 500);
+  }
+
+  onSelectClient = code => {
+      this.setState({isLoading: true});
+      setTimeout(() => {
+          this.setState({
+            isLoading: false,
+            screen: ScreenEnum.ENTER_JOB,
+          });
+      }, 500);
+  }
+
+  onSelectProvider = code => {
+      this.setState({isLoading: true});
+      setTimeout(() => {
+          this.setState({
+            isLoading: false,
+            screen: ScreenEnum.ENTER_JOB,
+          });
+      }, 500);
   }
 
   render() {
@@ -63,6 +85,10 @@ export default class App extends React.Component {
         break;
       case ScreenEnum.SEARCHING:
         screenToShow = <SearchingScreen />;
+        break;
+      case ScreenEnum.PICK_USER:
+        screenToShow = <PickUserScreen onPressClient={this.onSelectClient}
+                                       onPressProvider={this.onSelectProvider} />;
         break;
       case ScreenEnum.ENTER_PHONE:
       default:

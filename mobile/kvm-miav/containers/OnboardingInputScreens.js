@@ -12,15 +12,15 @@ class OnboardingInputScreen extends React.Component {
   render() {
     return (
       <KeyboardAvoidingView behavior={'padding'} style={styles.container}>
-        <Text style={{color: 'white'}}>
-          {this.props.text}
-        </Text>
+          <Text style={{color: 'white'}}>
+              {this.props.text}
+          </Text>
 
-        <LargeNumberInput maxLength={this.props.maxNumberLength}
-                          onFinishedInput={this.props.onInput}
-                          isEditable={!this.props.isLoading} />
+          <LargeNumberInput maxLength={this.props.maxNumberLength}
+              onFinishedInput={this.props.onInput}
+              isEditable={!this.props.isLoading} />
 
-        <ActivityIndicator animating={this.props.isLoading} size={'large'} style={{margin: 20}}/>
+          <ActivityIndicator animating={this.props.isLoading} size={'large'} style={{margin: 20}}/>
       </KeyboardAvoidingView>
     )
   }
