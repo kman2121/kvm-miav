@@ -21,8 +21,8 @@ jobs:
       - checkout
 
       - run:
-        name: go to backend directory
-        command: cd backend/miavbackend
+          name: go to backend directory
+          command: cd backend/miavbackend
 
       # Download and cache dependencies
       - restore_cache:
