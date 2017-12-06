@@ -19,9 +19,12 @@ export const registerPassenger = async (username, phone, password, confirm_passw
 
   if (res.status == 200) {
     body = await reset.json();
-    return true;
-  } else {
+    storage.setUser(body.token, body.user);
 
+    return body.user;
+  } else {
+    console.log(await res.text());
+    return null;
   }
 }
 
@@ -46,8 +49,12 @@ export const registerDriver = async (username, phone, password, confirm_password
 
   if (res.status == 200) {
     body = await reset.json();
-  } else {
+    storage.setUser(body.token, body.user);
 
+    return body.user;
+  } else {
+    console.log(await res.text());
+    return null;
   }
 }
 
