@@ -2,104 +2,80 @@ import Expo from 'expo';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import * as api from './utils/api';
+import * as storage from './utils/storage';
 import {
-  EnterCodeScreen,
-  EnterJobScreen,
-  EnterPhoneScreen,
-  SearchingScreen,
-  PickUserScreen
+  AuthContainer,
+  DriverContainer,
+  PassengerContainer
 } from './containers';
 
-class ScreenEnum {
-  static ENTER_PHONE = 'ep';
-  static ENTER_CODE  = 'ec';
-  static ENTER_JOB   = 'ej';
-  static SEARCHING   = 'sr';
-  static PICK_USER = 'pu';
+class ContainerEnum {
+  static AUTH      = 'a';
+  static DRIVER    = 'd';
+  static PASSENGER = 'p';
 }
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    
-    this.state = {
-      screen: ScreenEnum.ENTER_JOB,
 
-      isLoading: false
+    this.state = {
+      container: ContainerEnum.AUTH,
+      user: null
     };
   }
 
-  onPhoneInput = phone => {
-    this.setState({isLoading: true});
-
-    // TODO: make API call
-    setTimeout(() => {
-      this.setState({
-        isLoading: false,
-        screen: ScreenEnum.ENTER_CODE,
-      });
-    }, 500);
+  async componentDidMount() {
+    // If there is a token stored, try to verify it and if it is valid, automatically log in
+    const token = await storage.getToken();
+    if (token) {
+      const user = await api.verify(token);
+      if (user) {
+        this.setUser(user);
+      }
+    }
   }
 
-  onCodeInput = code => {
-    this.setState({isLoading: true});
-
-    // TODO: make API call
-    setTimeout(() => {
-        this.setState({
-          isLoading: false,
-          screen: ScreenEnum.PICK_USER,
-        });
-    }, 500);
+  setUser(user) {
+    this.setState({ user });
+    switch (user.usertype) {
+      case 'driver':
+        this.setState({container: ContainerEnum.DRIVER});
+        break;
+      case 'passenger':
+        this.setState({container: ContainerEnum.PASSENGER});
+        break;
+      default:
+        break;
+    }
   }
 
-  onSelectClient = code => {
-      this.setState({isLoading: true});
-      setTimeout(() => {
-          this.setState({
-            isLoading: false,
-            screen: ScreenEnum.ENTER_JOB,
-          });
-      }, 500);
-  }
-
-  onSelectProvider = code => {
-      this.setState({isLoading: true});
-      setTimeout(() => {
-          this.setState({
-            isLoading: false,
-            screen: ScreenEnum.ENTER_JOB,
-          });
-      }, 500);
+  async login(username, password) {
+    const user = await api.login(username, password);
+    if (user) {
+      this.setUser(user);
+    }
   }
 
   render() {
-    let screenToShow = '';
-    switch (this.state.screen) {
-      case ScreenEnum.ENTER_CODE:
-        screenToShow = <EnterCodeScreen isLoading={this.state.isLoading}
-                                        onInput={this.onCodeInput} />;
+    let container;
+    switch (this.state.container) {
+      case ContainerEnum.DRIVER:
+        container = <DriverContainer />;
         break;
-      case ScreenEnum.ENTER_JOB:
-        screenToShow = <EnterJobScreen />;
+      case ContainerEnum.PASSENGER:
+        container = <PassengerContainer />;
         break;
-      case ScreenEnum.SEARCHING:
-        screenToShow = <SearchingScreen />;
-        break;
-      case ScreenEnum.PICK_USER:
-        screenToShow = <PickUserScreen onPressClient={this.onSelectClient}
-                                       onPressProvider={this.onSelectProvider} />;
-        break;
-      case ScreenEnum.ENTER_PHONE:
+      case ContainerEnum.AUTH:
       default:
-        screenToShow = <EnterPhoneScreen isLoading={this.state.isLoading}
-                                         onInput={this.onPhoneInput} />;
+        container = <AuthContainer />;
         break;
     }
 
     return (
       <View style={styles.container}>
-        { screenToShow }
+        { container }
       </View>
     );
   }
@@ -108,7 +84,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'black',
     alignItems: 'stretch',
     justifyContent: 'center',
     paddingTop: Expo.Constants.statusBarHeight

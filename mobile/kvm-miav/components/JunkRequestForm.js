@@ -33,7 +33,10 @@ export class JunkRequest extends React.Component {
 		});
 	};
 
-
+	_submitJob = () => {
+		console.log(this.state);
+		this.setState({searching: true});
+	}
 
 	_handleDatePicked = (date) => {
 		this._hideDateTimePicker();
@@ -93,7 +96,7 @@ export class JunkRequest extends React.Component {
 			</View>
 			<View style={styles.row}>
 				<Text style={styles.itemTitle}>Max Price:</Text>
-                <Text style={{color:'white'}}>$</Text>
+                <Text style={{color:'white'}}>$ </Text>
                 <TextInput style={{flex: 1, marginRight: 200, color:'white'}}
                            keyboardType={'numeric'}
                            maxLength={500}
@@ -104,11 +107,12 @@ export class JunkRequest extends React.Component {
                 <TextInput
                     multiline={true}
                     numberOfLines={4}
-                    onChangeText={(text) => this.setState({text})}
-                    value={this.state.text}/>
+                    onChangeText={(text) => this.setState({description: text})}
+					value={this.state.description}
+					style={{color: 'white'}} />
 			</View>
             <View style={styles.row, {justifyContent: 'space-around'}}>
-                <Button style={styles.submit} title="SUBMIT" onPress={(text) => this.setState({searching: true})}></Button>
+                <Button style={styles.submit} title="SUBMIT" onPress={() => this._submitJob()}></Button>
             </View>
 		</View>);
 	}

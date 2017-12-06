@@ -13,7 +13,7 @@ import {
 import { MiniMap,
     JunkRequest,
     MoveRequest
- } from '../components';
+ } from '../../components';
 
  const initialLayout = {
    height: 0,

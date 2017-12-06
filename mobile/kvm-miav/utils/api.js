@@ -58,9 +58,8 @@ export const registerDriver = async (username, phone, password, confirm_password
   }
 }
 
-export const verify = async () => {
+export const verify = async (token) => {
   const url = `${API_ENDPOINT}/auth/login`;
-  const token = await storage.getToken();
 
   res = await fetch(url, {
     method: 'POST',
