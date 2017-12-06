@@ -8,6 +8,8 @@ import {
 	TextInput,
 	Button,
 	KeyboardAvoidingView,
+	Modal,
+	ActivityIndicator,
 } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
@@ -19,8 +21,11 @@ export class MoveRequest extends React.Component {
 		startTime: "            ",
 		endTime: "            ",
 		maxPrice: "0",
-		description: ""
+		description: "",
+		searching: false
 	};
+
+	_showModal = () => {};
 
 	_hideDateTimePicker = () => this.setState({
 		isDateTimePickerVisible: false
@@ -69,16 +74,28 @@ export class MoveRequest extends React.Component {
 			numrm = i.toString();
 			pickeritems.push(<Picker.Item key={numrm} label={numrm} value={numrm}/>)
 		}
-		return (<KeyboardAvoidingView behavior={'padding'} style={styles.container}>
+		return (<View style={styles.container}>
             <DateTimePicker mode={'time'}
                             isVisible={this.state.isDateTimePickerVisible}
                             onConfirm={this._handleDatePicked}
                             onCancel={this._hideDateTimePicker}
                             value={this.state.startTime}/>
+            <Modal visible={this.state.searching}
+                   onRequestClose={(text) => this.setState({searching: false})}
+                   transparent={true}
+                   style={styles.modalstyle}>
+                <View style={styles.modalstyle}>
+                    <View style={styles.modalbox}>
+                        <Text style={{color: 'white'}}>Searching for MIAVs near you...</Text>
+                        <ActivityIndicator animating={this.props.searching} size={'large'}/>
+                    </View>
+                </View>
+            </Modal>
 			<View style={styles.row}>
 				<Text style={styles.itemTitle}>Number of Rooms:</Text>
 				<Picker style={{
-						width: 100
+						width: 100,
+                        color: 'white',
 					}} selectedValue={this.state.rooms} onValueChange={(itemValue) => this.setState({rooms: itemValue})}>
 					{pickeritems}
 				</Picker>
@@ -99,8 +116,8 @@ export class MoveRequest extends React.Component {
 			</View>
 			<View style={styles.row}>
 				<Text style={styles.itemTitle}>Max Price:</Text>
-                <Text>$</Text>
-                <TextInput style={{flex: 1, marginRight: 220}}
+                <Text style={{color:'white'}}>$</Text>
+                <TextInput style={{flex: 1, marginRight: 200, color:'white'}}
                            keyboardType={'numeric'}
                            maxLength={500}
                            onChangeText={(value)=>this.setState({maxPrice: value})}/>
@@ -113,25 +130,47 @@ export class MoveRequest extends React.Component {
                     onChangeText={(text) => this.setState({text})}
                     value={this.state.text}/>
 			</View>
-		</KeyboardAvoidingView>);
+            <View style={styles.row, {justifyContent: 'space-around'}}>
+                <Button style={styles.submit} title="SUBMIT" onPress={(text) => this.setState({searching: true})}></Button>
+            </View>
+		</View>);
 	}
 }
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#ffffff',
+		backgroundColor: '#222',
 		justifyContent: 'space-between',
 		alignItems: 'stretch',
 	},
 	itemTitle: {
+		marginLeft: 20,
 		marginRight: 20,
+		color: 'white',
 	},
 	row: {
+		flex: 3,
 		flexDirection: 'row',
 		alignItems: 'center',
 	},
 	rowInput: {
 		flex: 1
+	},
+	submit: {},
+	modalstyle: {
+		flex: 1,
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	modalbox: {
+		backgroundColor: '#3a3838',
+		justifyContent: 'space-around',
+		alignItems: 'center',
+		width: 250,
+		height: 200,
+		borderRadius: 10,
+		borderColor: '#3a3838'
 	}
 });
