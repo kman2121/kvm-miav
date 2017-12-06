@@ -26,7 +26,7 @@ SECRET_KEY = 's8k%hja@1ky6$3omj(t1_5os9ddtc-p%$7)3gifa5ghy_4f94m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['cs5356-miav.appspot.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -145,4 +145,5 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATIC_URL = 'http://storage.googleapis.com/kvd-miav/static/'
