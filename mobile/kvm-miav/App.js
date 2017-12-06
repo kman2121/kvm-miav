@@ -1,6 +1,9 @@
 import Expo from 'expo';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import {
+	StyleSheet,
+	View
+} from 'react-native';
 
 import * as api from './utils/api';
 import * as storage from './utils/storage';
@@ -77,8 +80,8 @@ export default class App extends React.Component {
       <View style={styles.container}>
         { container }
       </View>
-    );
-  }
+		);
+	}
 }
 
 const styles = StyleSheet.create({
