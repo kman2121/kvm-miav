@@ -26,7 +26,7 @@ export default class App extends React.Component {
 		super(props);
 
 		this.state = {
-			screen: ScreenEnum.SEARCHING,
+			screen: ScreenEnum.ENTER_JOB,
 
 			isLoading: false
 		};

@@ -6,6 +6,7 @@ from rest_framework import filters, status, generics
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework.views import APIView
+from rest_framework_jwt.utils import jwt_payload_handler, jwt_encode_handler
 
 from miavapp.models import *
 from miavapp.serializers import *
@@ -14,6 +15,8 @@ from miavapp.utils import jwt_response
 class ApiRoot(APIView):
     def get(self, request, format=None):
         return Response({
+            'login': reverse('login', request=request, format=format),
+            'verify': reverse('verify-token', request=request, format=format),
             'drivers': reverse('drivers-list', request=request, format=format),
             'passengers': reverse('passengers-list', request=request, format=format),
             'jobs': reverse('jobs-list', request=request, format=format),
@@ -59,7 +62,10 @@ class DriverList(generics.ListCreateAPIView):
             })
             if serializer.is_valid(raise_exception=False):
                 serializer.save()
-                return Response(serializer.data, status.HTTP_201_CREATED)
+
+                payload = jwt_payload_handler(user)
+                token = jwt_encode_handler(payload)
+                return Response({'token': token, 'driver': DriverSerializer(serializer.instance).data}, status.HTTP_201_CREATED)
             else:
                 user.delete()
                 vehicle.delete()
@@ -101,7 +107,10 @@ class PassengerList(generics.ListCreateAPIView):
             serializer = self.get_serializer(data={'user': user.id})
             if serializer.is_valid(raise_exception=False):
                 serializer.save()
-                return Response(serializer.data, status.HTTP_201_CREATED)
+
+                payload = jwt_payload_handler(user)
+                token = jwt_encode_handler(payload)
+                return Response({'token': token, 'passenger': PassengerSerializer(serializer.instance).data}, status.HTTP_201_CREATED)
             else:
                 user.delete()
                 return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)

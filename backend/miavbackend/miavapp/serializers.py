@@ -6,7 +6,7 @@ from miavapp.models import *
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'last_login', 'phone')
+        fields = ('id', 'username', 'last_login', 'phone', 'usertype')
         read_only_fields = ('last_login',)
 
 class UserRegisterSerializer(serializers.ModelSerializer):

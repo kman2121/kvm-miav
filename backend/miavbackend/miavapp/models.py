@@ -5,8 +5,7 @@ from miavapp import validators
 
 class UserManager(BaseUserManager):
     def create_user(self, password=None, **kwargs):
-        user = self.model(is_active=False,
-                          username=kwargs.get('username'),
+        user = self.model(username=kwargs.get('username'),
                           phone=kwargs.get('phone'))
 
         user.set_password(password)
@@ -15,7 +14,6 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser):
     username = models.CharField(max_length=16, unique=True)
-    is_active = models.BooleanField()
     date_created = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(null=True)
     phone = models.BigIntegerField(unique=True)
@@ -76,7 +74,7 @@ class Rating(models.Model):
 class Job(models.Model):
     passenger = models.ForeignKey(Passenger)
     start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
+    end_time = models.DateTimeField(blank=True, null=True)
     max_price = models.DecimalField(max_digits=4, decimal_places=2)
     num_boxes = models.IntegerField()
     description = models.TextField()
