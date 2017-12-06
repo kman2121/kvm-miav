@@ -74,7 +74,7 @@ class Rating(models.Model):
 class Job(models.Model):
     passenger = models.ForeignKey(Passenger)
     start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
+    end_time = models.DateTimeField(blank=True, null=True)
     max_price = models.DecimalField(max_digits=4, decimal_places=2)
     num_boxes = models.IntegerField()
     description = models.TextField()
