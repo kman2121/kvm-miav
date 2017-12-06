@@ -21,9 +21,9 @@ class ScreenEnum {
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-
+    
     this.state = {
-      screen: ScreenEnum.ENTER_PHONE,
+      screen: ScreenEnum.ENTER_JOB,
 
       isLoading: false
     };
