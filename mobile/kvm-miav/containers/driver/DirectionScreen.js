@@ -2,7 +2,8 @@ import React from 'react';
 import {
 	StyleSheet,
 	View,
-	Dimensions
+	Dimensions,
+	Button
 } from 'react-native';
 import {
 	Location,
@@ -51,35 +52,38 @@ export class DirectionScreen extends React.Component {
 		})
 		return (
 			<View style={styles.wrapper}>
-        <MapView
-          style={styles.map}
-          customMapStyle={require('../../assets/gmap_style.json')}
-          initialRegion={{
-            latitude: this.state.lat,
-            longitude: this.state.lng,
-            latitudeDelta: 0.015,
-            longitudeDelta: 0.0121,
-        }}
-        ref={c => this.mapView = c}>
-          <MapViewDirections
-            origin={{latitude: this.state.lat, longitude: this.state.lng}}
-            destination={{latitude: parseFloat(this.props.jobLoc[0]), longitude: parseFloat(this.props.jobLoc[1])}}
-            apikey={GOOGLE_MAPS_APIKEY}
-            strokeWidth={3}
-            strokeColor="hotpink"
-            onReady={(result) => {
-              this.mapView.fitToCoordinates(result.coordinates, {
-                edgePadding: {
-                  right: parseInt(width / 20),
-                  bottom: parseInt(height / 20),
-                  left: parseInt(width / 20),
-                  top: parseInt(height / 20),
-                }
-              });
-            }}
-          />
-        </MapView>
-      </View>
+                <MapView
+                  style={styles.map}
+                  customMapStyle={require('../../assets/gmap_style.json')}
+                  initialRegion={{
+                    latitude: this.state.lat,
+                    longitude: this.state.lng,
+                    latitudeDelta: 0.015,
+                    longitudeDelta: 0.0121,
+                }}
+                ref={c => this.mapView = c}>
+                  <MapView.Marker coordinate={{latitude: this.state.lat, longitude: this.state.lng}}/>
+                  <MapView.Marker coordinate={{latitude: parseFloat(this.props.jobLoc[0]), longitude: parseFloat(this.props.jobLoc[1])}}/>
+                  <MapViewDirections
+                    origin={{latitude: this.state.lat, longitude: this.state.lng}}
+                    destination={{latitude: parseFloat(this.props.jobLoc[0]), longitude: parseFloat(this.props.jobLoc[1])}}
+                    apikey={GOOGLE_MAPS_APIKEY}
+                    strokeWidth={4}
+                    strokeColor="hotpink"
+                    onReady={(result) => {
+                      this.mapView.fitToCoordinates(result.coordinates, {
+                        edgePadding: {
+                          right: parseInt(width / 20),
+                          bottom: parseInt(height / 20),
+                          left: parseInt(width / 20),
+                          top: parseInt(height / 20),
+                        }
+                      });
+                    }}
+                  />
+                </MapView>
+                <Button color='red' title='Done With Job' onPress={console.log("Done")} />
+              </View>
 		);
 	}
 }
@@ -91,6 +95,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#222'
 	},
 	map: {
-		...StyleSheet.absoluteFillObject
+		alignSelf: 'stretch',
+		flex: 1
 	},
 });
