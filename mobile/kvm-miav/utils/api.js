@@ -108,10 +108,13 @@ export const login = async (username, password) => {
 
 export const createJob = async (job_type, start_time, num_boxes, max_price, description, end_time) => {
   const url = `${API_ENDPOINT}/jobs`;
+  const token = await storage.getToken();
+
   res = await fetch(url, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `JWT ${token}`
     },
     body: JSON.stringify({
       job_type,
@@ -133,10 +136,13 @@ export const createJob = async (job_type, start_time, num_boxes, max_price, desc
 
 export const getJobs = async () => {
   const url = `${API_ENDPOINT}/jobs`;
+  const token = await storage.getToken();
+  
   res = await fetch(url, {
     method: 'GET',
     headers: {
-      Accept: 'application/json'
+      Accept: 'application/json',
+      'Authorization': `JWT ${token}`
     }
   });
 
@@ -150,10 +156,13 @@ export const getJobs = async () => {
 
 export const getJobsByPassenger = async (passengerId) => {
   const url = `${API_ENDPOINT}/jobs/passenger=${passengerId}`;
+  const token = await storage.getToken();
+  
   res = await fetch(url, {
     method: 'GET',
     headers: {
-      Accept: 'application/json'
+      Accept: 'application/json',
+      'Authorization': `JWT ${token}`
     }
   });
 
