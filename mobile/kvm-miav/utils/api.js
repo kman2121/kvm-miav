@@ -4,6 +4,21 @@ import * as storage from './storage';
 
 API_ENDPOINT = 'https://cs5356-miav.appspot.com/api/v1';
 
+const getCurrentLocation = async () => {
+  const { status } = await Permissions.askAsync(Permissions.LOCATION);
+  if (status === 'granted') {
+    const location = await Location.getCurrentPositionAsync({});
+    return [location.coords.latitude, location.coords.longitude];
+  } else {
+    return [40.755644, -73.956097];
+  }
+}
+
+const parseTime = t => {
+  const d = new Date();
+  return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}T${t.substr(0, 5)}`;
+}
+
 export const registerPassenger = async (username, phone, password, confirm_password) => {
   const url = `${API_ENDPOINT}/passengers`;
   res = await fetch(url, {
@@ -111,7 +126,7 @@ export const login = async (username, password) => {
 export const createJob = async (job_type, start_time, num_boxes, max_price, description, end_time) => {
   const url = `${API_ENDPOINT}/jobs`;
   const token = await storage.getToken();
-  [lat, long] = await getcurrentLocation();
+  [lat, long] = await getCurrentLocation();
 
   res = await fetch(url, {
     method: 'POST',
@@ -121,17 +136,17 @@ export const createJob = async (job_type, start_time, num_boxes, max_price, desc
     },
     body: JSON.stringify({
       job_type,
-      start_time,
+      start_time: parseTime(start_time),
       num_boxes,
       max_price,
       description,
       job_loc_lat: lat,
       job_loc_long: long,
-      end_time
+      end_time: end_time ? parseTime(end_time) : end_time
     })
   });
 
-  if (res.status === 200) {
+  if (res.status === 201) {
     return true;
   } else {
     console.log(await res.text());
@@ -176,15 +191,5 @@ export const getJobsByPassenger = async (passengerId) => {
   } else {
     console.log(await res.text());
     return null;
-  }
-}
-
-const getCurrentLocation = async () => {
-  const { status } = await Permissions.askAsync(Permissions.LOCATION);
-  if (status === 'granted') {
-    const location = await Location.getCurrentPositionAsync({});
-    return [location.coords.latitude, location.coords.longitude];
-  } else {
-    return [40.755644, -73.956097];
   }
 }

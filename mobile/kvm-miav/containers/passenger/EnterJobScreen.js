@@ -37,8 +37,8 @@ export class EnterJobScreen extends React.PureComponent {
   _renderHeader = props => <TabBar {...props} />;
 
   _renderScene = SceneMap({
-    first: FirstRoute,
-    second: SecondRoute,
+    first: () => <MoveRequest submitJob={this.props.submitJob} cancel={this.props.cancel} />,
+    second: () => <JunkRequest submitJob={this.props.submitJob} cancel={this.props.cancel} />
   });
 
   render() {

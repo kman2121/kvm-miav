@@ -9,39 +9,40 @@ import {
 } from 'react-native';
 
 export class PassengerHistoryJobItem extends React.Component {
-	constructor(props) {
-		super(props);
+	render = () => {
+		let color;
+		switch (this.props.status) {
+			case 'completed':
+				color = 'green';
+				break;
+			case 'in_progress':
+				color = 'yellow';
+				break;
+			case 'pending':
+			default:
+				color = 'red';
+				break;
+		}
+		return (
+			<View style={{ backgroundColor: color, marginTop: 10 }}>
+				<View style={styles.description}>
+					<Text style={styles.jobText}>
+						{this.props.description}
+					</Text>
+				</View>
+			</View>
+		);
 	}
-	render = () => <View style={styles.containerView}>
-                    <TouchableOpacity style={styles.jobContainer} onPress={this.props.pressAction}>
-                        <View style={styles.description}>
-                            <Text style={styles.jobText}>
-                                {this.props.status + '\n'}
-                                {this.props.description}
-                            </Text>
-                        </View>
-                   </TouchableOpacity>
-               </View>
 }
 
 const styles = StyleSheet.create({
-	jobContainer: {
-		alignItems: 'stretch',
-		justifyContent: 'space-between',
-		backgroundColor: '#222',
-		flexDirection: 'row',
-		borderRadius: 3,
-		borderColor: 'white',
-		borderWidth: 0.2,
-		marginBottom: 5,
-	},
-	price: {
-		justifyContent: 'center',
-		flex: 1,
-	},
 	description: {
 		flex: 3,
 		marginLeft: 20,
+		marginRight: 20,
+		minHeight: 40,
+		alignItems: 'center',
+		justifyContent: 'center'
 	},
 	jobTitle: {
 		fontSize: 30,
@@ -50,9 +51,5 @@ const styles = StyleSheet.create({
 	jobText: {
 		fontSize: 20,
 		color: 'white',
-	},
-	priceText: {
-		fontSize: 40,
-		color: 'white'
 	}
 });

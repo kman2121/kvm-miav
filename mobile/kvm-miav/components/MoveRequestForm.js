@@ -8,7 +8,6 @@ import {
 	TextInput,
 	Button,
 	KeyboardAvoidingView,
-	Modal,
 	ActivityIndicator,
 } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
@@ -23,8 +22,6 @@ export class MoveRequest extends React.Component {
 		maxPrice: "0",
 		description: ""
 	};
-
-	_showModal = () => {};
 
 	_hideDateTimePicker = () => this.setState({
 		isDateTimePickerVisible: false
@@ -83,17 +80,6 @@ export class MoveRequest extends React.Component {
                             onConfirm={this._handleDatePicked}
                             onCancel={this._hideDateTimePicker}
                             value={this.state.startTime}/>
-            <Modal visible={this.state.searching}
-                   onRequestClose={(text) => this.setState({searching: false})}
-                   transparent={true}
-                   style={styles.modalstyle}>
-                <View style={styles.modalstyle}>
-                    <View style={styles.modalbox}>
-                        <Text style={{color: 'white'}}>Searching for MIAVs near you...</Text>
-                        <ActivityIndicator animating={this.props.searching} size={'large'}/>
-                    </View>
-                </View>
-            </Modal>
 			<View style={styles.row}>
 				<Text style={styles.itemTitle}>Number of Rooms:</Text>
 				<Picker style={{
@@ -130,12 +116,19 @@ export class MoveRequest extends React.Component {
                 <TextInput
                     multiline={true}
                     numberOfLines={4}
-                    onChangeText={(text) => this.setState({text})}
-                    value={this.state.text}/>
+                    onChangeText={(text) => this.setState({ description: text })}
+                    value={this.state.description}
+					style={{color: 'white'}} />
 			</View>
-            <View style={styles.row, {justifyContent: 'space-around'}}>
-                <Button style={styles.submit} title="SUBMIT" onPress={this._submitJob}></Button>
-            </View>
+			
+			<View style={styles.buttonRow}>
+				<View style={styles.buttonContainer}>
+					<Button title='CANCEL' onPress={this.props.cancel} />
+				</View>
+				<View style={styles.buttonContainer}>
+					<Button title='SUBMIT' onPress={this._submitJob} />
+				</View>
+			</View>
 		</View>);
 	}
 }
@@ -157,23 +150,13 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 	},
-	rowInput: {
-		flex: 1
-	},
-	submit: {},
-	modalstyle: {
+	buttonRow: {
 		flex: 1,
-		flexDirection: 'column',
-		justifyContent: 'center',
-		alignItems: 'center',
+		flexDirection: 'row',
+		justifyContent: 'space-between'
 	},
-	modalbox: {
-		backgroundColor: '#3a3838',
-		justifyContent: 'space-around',
-		alignItems: 'center',
-		width: 250,
-		height: 200,
-		borderRadius: 10,
-		borderColor: '#3a3838'
+	buttonContainer: {
+		flex: 0.45,
+		alignItems: 'stretch'
 	}
 });

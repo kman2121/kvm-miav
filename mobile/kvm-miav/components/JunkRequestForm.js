@@ -8,7 +8,6 @@ import {
 	TextInput,
 	Button,
 	KeyboardAvoidingView,
-	Modal,
 	ActivityIndicator
 } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
@@ -98,9 +97,15 @@ export class JunkRequest extends React.Component {
 					value={this.state.description}
 					style={{color: 'white'}} />
 			</View>
-            <View style={styles.row, {justifyContent: 'space-around'}}>
-                <Button style={styles.submit} title="SUBMIT" onPress={this._submitJob}></Button>
-            </View>
+
+			<View style={styles.buttonRow}>
+				<View style={styles.buttonContainer}>
+					<Button title='CANCEL' onPress={this.props.cancel} />
+				</View>
+				<View style={styles.buttonContainer}>
+					<Button title='SUBMIT' onPress={this._submitJob} />
+				</View>
+          	</View>
 		</View>);
 	}
 }
@@ -122,23 +127,13 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 	},
-	rowInput: {
-		flex: 1
-	},
-	submit: {},
-	modalstyle: {
+	buttonRow: {
 		flex: 1,
-		flexDirection: 'column',
-		justifyContent: 'center',
-		alignItems: 'center',
+		flexDirection: 'row',
+		justifyContent: 'space-between'
 	},
-	modalbox: {
-		backgroundColor: '#3a3838',
-		justifyContent: 'space-around',
-		alignItems: 'center',
-		width: 250,
-		height: 200,
-		borderRadius: 10,
-		borderColor: '#3a3838'
+	buttonContainer: {
+		flex: 0.45,
+		alignItems: 'stretch'
 	}
 });

@@ -12,7 +12,7 @@ import {
 
 export class PassengerJobHistoryScreen extends React.Component {
 	render() {
-		const jobItems = this.props.jobs.filter(job => job.status === 'pending').map(job => {
+		const jobItems = this.props.jobs.map(job => {
 			return <PassengerHistoryJobItem status={job.status} description={job.description} />;
 		});
 		const ds = new ListView.DataSource({
@@ -25,7 +25,7 @@ export class PassengerJobHistoryScreen extends React.Component {
 					<Text style={styles.headerText}>My Past Men</Text>
 				</View>
 				<View style={styles.listviewContainer}>
-					<ListView dataSource={ds} renderRow={(rowData) => rowData}/>
+					<ListView enableEmptySections={true} dataSource={ds} renderRow={(rowData) => rowData}/>
 				</View>
 
 				<Button title='+ New Job' onPress={this.props.createNewJob} />

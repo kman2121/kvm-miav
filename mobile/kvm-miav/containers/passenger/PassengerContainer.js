@@ -1,6 +1,6 @@
 import Expo from 'expo';
 import React from 'react';
-import { Button, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Button, Modal, StyleSheet, Text, View } from 'react-native';
 
 import * as api from '../../utils/api';
 import { EnterJobScreen } from './EnterJobScreen';
@@ -18,7 +18,7 @@ export class PassengerContainer extends React.Component {
     this.state = {
       screen: ScreenEnum.JOB_HIST,
       jobs: [],
-      isLoading: false
+      loading: false
     };
   }
 
@@ -28,14 +28,16 @@ export class PassengerContainer extends React.Component {
 
   goToCreateJob = () => this.setState({ screen: ScreenEnum.ENTER_JOB });
   goToJobHist = async () => {
-    this.setState({ screen: ScreenEnum.JOB_HIST});
+    this.setState({ screen: ScreenEnum.JOB_HIST });
 
     const jobs = await api.getJobsByPassenger(this.props.currentUser.passenger.id);
     this.setState({ jobs });
   }
 
   submitJob = async (job_type, start_time, num_boxes, max_price, description, end_time) => {
+    this.setState({ loading: true });
     const success = await api.createJob(job_type, start_time, num_boxes, max_price, description, end_time);
+    this.setState({ loading: false });
     if (success) {
       this.goToJobHist();
     }
@@ -49,12 +51,23 @@ export class PassengerContainer extends React.Component {
         break;
       case ScreenEnum.ENTER_JOB:
       default:
-        screenToShow = <EnterJobScreen submitJob={this.submitJob} />;
+        screenToShow = <EnterJobScreen submitJob={this.submitJob} cancel={this.goToJobHist} />;
         break;
     }
 
     return (
       <View style={styles.container}>
+        <Modal visible={this.state.loading}
+               onRequestClose={(text) => this.setState({loading: false})}
+               transparent={true}
+               style={styles.modalStyles}>
+            <View style={styles.modalStyles}>
+                <View style={styles.modalBoxStyles}>
+                    <Text style={{color: 'white'}}>Submitting request...</Text>
+                    <ActivityIndicator animating={this.props.searching} size={'large'}/>
+                </View>
+            </View>
+        </Modal>
         <Button title='Log Out' onPress={this.props.logout} />
         { screenToShow }
       </View>
@@ -69,4 +82,19 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     justifyContent: 'center'
   },
+	modalStyles: {
+		flex: 1,
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	modalBoxStyles: {
+		backgroundColor: '#3a3838',
+		justifyContent: 'space-around',
+		alignItems: 'center',
+		width: 250,
+		height: 200,
+		borderRadius: 10,
+		borderColor: '#3a3838'
+	}
 });
