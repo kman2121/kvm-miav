@@ -81,6 +81,13 @@ class Job(models.Model):
     job_type = models.CharField(max_length=4, validators=[validators.validate_job_type])
     status = models.CharField(max_length=10, validators=[validators.validate_status])
 
+    job_loc_lat = models.FloatField()
+    job_loc_long = models.FloatField()
+
+    @property
+    def job_loc(self):
+        return (self.job_loc_lat, self.job_loc_long)
+
     class Meta:
         db_table = 'job'
 
