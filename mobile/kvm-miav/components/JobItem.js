@@ -20,14 +20,14 @@ export class JobItem extends React.Component {
                                 {this.props.job.passenger.username}
                             </Text>
                             <Text style={styles.jobText}>
-                                {this.props.job.num_boxes + 'Rooms \n'}
-                                {this.props.job.start_time + " - " + this.props.job.end_time + "\n"}
+                                {this.props.job.num_boxes + ' Rooms \n'}
+                                {new Date(this.props.job.start_time).toLocaleTimeString() + " - " + new Date(this.props.job.end_time).toLocaleTimeString() + "\n"}
                                 {this.props.job.description}
                             </Text>
                         </View>
                         <View style={styles.price}>
                             <Text style={styles.priceText}>
-                                {this.props.job.max_price}
+                                {"$" + this.props.job.max_price}
                             </Text>
                         </View>
                    </TouchableOpacity>
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
 	},
 	price: {
 		justifyContent: 'center',
-		flex: 1,
+		flex: 2,
 	},
 	description: {
 		flex: 3,
