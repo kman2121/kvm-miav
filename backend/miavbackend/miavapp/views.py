@@ -6,11 +6,11 @@ from rest_framework import filters, status, generics
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework.views import APIView
-from rest_framework_jwt.utils import jwt_payload_handler, jwt_encode_handler
+from rest_framework_jwt.utils import jwt_encode_handler
 
 from miavapp.models import *
 from miavapp.serializers import *
-from miavapp.utils import jwt_response
+from miavapp.utils import jwt_response, jwt_payload_handler
 
 class ApiRoot(APIView):
     def get(self, request, format=None):

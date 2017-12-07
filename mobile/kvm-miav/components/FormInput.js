@@ -14,7 +14,7 @@ export class FormInput extends React.Component {
           {this.props.label}
         </Text>
         <TextInput style={styles.input}
-                   onEndEditing={this.props.onFinishedInput}
+                   onChangeText={this.props.onChangeText}
                    editable={this.props.isEditable}
                    secureTextEntry={this.props.isPassword} />
       </View>

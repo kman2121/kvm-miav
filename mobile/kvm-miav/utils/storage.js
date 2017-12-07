@@ -14,7 +14,6 @@ export const setUser = async (token, user) => {
 }
 
 export const getToken = async () => {
-	// return "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InBhc3NlbmdlciIsImV4cCI6MTUxMzIxODMxMiwib3JpZ19pYXQiOjE1MTI2MTM1MTJ9.l0qH13GiS83ONS-2h9xoJho_BaqHW9ZGoxoBcfUhVmE"
 	try {
 		const token = await AsyncStorage.getItem('token');
 		if (token !== null) {
@@ -39,5 +38,13 @@ export const getUser = async () => {
 	} catch (error) {
 		console.log(error);
 		return null;
+	}
+}
+
+export const clearUser = () => {
+	try {
+		AsyncStorage.multiRemove(['token', 'user']);
+	} catch (error) {
+		console.log(error);
 	}
 }

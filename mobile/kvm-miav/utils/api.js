@@ -1,3 +1,5 @@
+import { Location, Permissions } from 'expo';
+
 import * as storage from './storage';
 
 API_ENDPOINT = 'https://cs5356-miav.appspot.com/api/v1';
@@ -48,7 +50,7 @@ export const registerDriver = async (username, phone, password, confirm_password
   });
 
   if (res.status == 200) {
-    body = await reset.json();
+    body = await res.json();
     storage.setUser(body.token, body.user);
 
     return body.user;
@@ -59,7 +61,7 @@ export const registerDriver = async (username, phone, password, confirm_password
 }
 
 export const verify = async (token) => {
-  const url = `${API_ENDPOINT}/auth/login`;
+  const url = `${API_ENDPOINT}/auth/verify`;
 
   res = await fetch(url, {
     method: 'POST',
@@ -109,6 +111,7 @@ export const login = async (username, password) => {
 export const createJob = async (job_type, start_time, num_boxes, max_price, description, end_time) => {
   const url = `${API_ENDPOINT}/jobs`;
   const token = await storage.getToken();
+  [lat, long] = await getcurrentLocation();
 
   res = await fetch(url, {
     method: 'POST',
@@ -122,6 +125,8 @@ export const createJob = async (job_type, start_time, num_boxes, max_price, desc
       num_boxes,
       max_price,
       description,
+      job_loc_lat: lat,
+      job_loc_long: long,
       end_time
     })
   });
@@ -171,5 +176,15 @@ export const getJobsByPassenger = async (passengerId) => {
   } else {
     console.log(await res.text());
     return null;
+  }
+}
+
+const getCurrentLocation = async () => {
+  const { status } = await Permissions.askAsync(Permissions.LOCATION);
+  if (status === 'granted') {
+    const location = await Location.getCurrentPositionAsync({});
+    return [location.coords.latitude, location.coords.longitude];
+  } else {
+    return [40.755644, -73.956097];
   }
 }

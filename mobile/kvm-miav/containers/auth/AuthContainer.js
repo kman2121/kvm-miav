@@ -5,8 +5,8 @@ import { LoginScreen } from './LoginScreen';
 import { RegisterScreen } from './RegisterScreen';
 
 class ScreenEnum {
-  static LOGIN     = 'login';
-  static REGISTER  = 'register';
+  static LOGIN    = 'login';
+  static REGISTER = 'register';
 }
 
 export class AuthContainer extends React.Component {
@@ -18,15 +18,11 @@ export class AuthContainer extends React.Component {
     };
   }
 
-  onLoginClick = () => {
-    return;
-  }
-
   onRegisterClick = () => {
     return;
   }
 
-  onToggleScreen = () => {
+  toggleScreen = () => {
     this.setState({
       screen: this.state.screen === ScreenEnum.LOGIN ? ScreenEnum.REGISTER : ScreenEnum.LOGIN
     });
@@ -35,8 +31,8 @@ export class AuthContainer extends React.Component {
   render() {
     return (
       this.state.screen === ScreenEnum.LOGIN ?
-        <LoginScreen /> :
-        <RegisterScreen />
+        <LoginScreen goToRegister={this.toggleScreen} login={this.props.login} /> :
+        <RegisterScreen goToLogin={this.toggleScreen} />
     );
   }
 }

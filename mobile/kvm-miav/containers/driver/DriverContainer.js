@@ -2,7 +2,8 @@ import Expo from 'expo';
 import React from 'react';
 import {
 	StyleSheet,
-	View
+	View,
+	Button
 } from 'react-native';
 
 import * as api from '../../utils/api';
@@ -57,8 +58,9 @@ export class DriverContainer extends React.Component {
 
 		return (
 			<View style={styles.container}>
-        { screenToShow }
-      </View>
+                <Button title='Log Out' onPress={this.props.logout} />
+                { screenToShow }
+            </View>
 		);
 	}
 }
