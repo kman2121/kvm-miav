@@ -12,7 +12,7 @@ import {
 export class SearchingScreen extends React.Component {
 	render() {
 		const jobItems = this.props.jobs.filter(job => job.status === 'pending').map(job => {
-			return <JobItem pressAction={() => this.props.switchScreen(job.job_loc)} job={job}/>;
+			return <JobItem pressAction={() => this.props.switchScreen(job)} job={job}/>;
 		});
 		const ds = new ListView.DataSource({
 			rowHasChanged: (r1, r2) => r1 !== r2

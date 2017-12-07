@@ -193,3 +193,26 @@ export const getJobsByPassenger = async (passengerId) => {
     return null;
   }
 }
+
+export const changeJobStatus = async (jobId, status) => {
+	const url = `${API_ENDPOINT}/jobs/${jobId}`;
+	const token = await storage.getToken();
+
+	res = await fetch(url, {
+		method: 'PATCH',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': `JWT ${token}`
+		},
+		body: JSON.stringify({
+			status: status,
+		})
+	});
+
+	if (res.status === 200) {
+		return true;
+	} else {
+		console.log(await res.text());
+		return false;
+	}
+}
