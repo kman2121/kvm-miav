@@ -192,9 +192,9 @@ export const changeJobStatus = async (jobId, status) => {
 			'Content-Type': 'application/json',
 			'Authorization': `JWT ${token}`
 		},
-		body: {
+		body: JSON.stringify({
 			status: status,
-		}
+		})
 	});
 
 	if (res.status === 200) {
