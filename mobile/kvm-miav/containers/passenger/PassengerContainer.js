@@ -23,20 +23,29 @@ export class PassengerContainer extends React.Component {
   }
 
   async componentDidMount() {
+    this.goToJobHist();
+  }
+
+  goToCreateJob = () => this.setState({ screen: ScreenEnum.ENTER_JOB });
+  goToJobHist = async () => {
+    this.setState({ screen: ScreenEnum.JOB_HIST});
+
     const jobs = await api.getJobsByPassenger(this.props.currentUser.passenger.id);
-    this.setState({ jobs: jobs });
+    this.setState({ jobs });
   }
 
   submitJob = async (job_type, start_time, num_boxes, max_price, description, end_time) => {
-    const success = api.createJob(job_type, start_time, num_boxes, max_price, description, end_time);
-    console.log(success);
+    const success = await api.createJob(job_type, start_time, num_boxes, max_price, description, end_time);
+    if (success) {
+      this.goToJobHist();
+    }
   }
 
   render() {
     let screenToShow;
     switch (this.state.screen) {
       case ScreenEnum.JOB_HIST:
-        screenToShow = <PassengerJobHistoryScreen jobs = {this.state.jobs} />
+        screenToShow = <PassengerJobHistoryScreen jobs={this.state.jobs} createNewJob={this.goToCreateJob} />
         break;
       case ScreenEnum.ENTER_JOB:
       default:

@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+	Button,
 	View,
 	StyleSheet,
 	ListView,
@@ -20,12 +21,14 @@ export class PassengerJobHistoryScreen extends React.Component {
 
 		return (
 			<View style={styles.container}>
-                    <View style={styles.header}>
-                        <Text style={styles.headerText}>My Past Men</Text>
-                    </View>
-                    <View style={styles.listviewContainer}>
-		                <ListView dataSource={ds} renderRow={(rowData) => rowData}/>
-                    </View>
+				<View style={styles.header}>
+					<Text style={styles.headerText}>My Past Men</Text>
+				</View>
+				<View style={styles.listviewContainer}>
+					<ListView dataSource={ds} renderRow={(rowData) => rowData}/>
+				</View>
+
+				<Button title='+ New Job' onPress={this.props.createNewJob} />
             </View>
 		)
 	}

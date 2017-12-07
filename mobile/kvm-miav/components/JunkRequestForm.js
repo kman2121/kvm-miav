@@ -99,7 +99,7 @@ export class JunkRequest extends React.Component {
 					style={{color: 'white'}} />
 			</View>
             <View style={styles.row, {justifyContent: 'space-around'}}>
-                <Button style={styles.submit} title="SUBMIT" onPress={() => this._submitJob()}></Button>
+                <Button style={styles.submit} title="SUBMIT" onPress={this._submitJob}></Button>
             </View>
 		</View>);
 	}
