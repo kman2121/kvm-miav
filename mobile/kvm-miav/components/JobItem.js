@@ -11,24 +11,28 @@ export class JobItem extends React.Component {
 	constructor(props) {
 		super(props);
 	}
-	render = () => <View style={styles.containerView}>
+	render = () => (
+		<View style={styles.containerView}>
                     <TouchableOpacity style={styles.jobContainer} onPress={this.props.pressAction}>
                         <View style={styles.description}>
                             <Text style={styles.jobTitle}>
-                                {this.props.distance} away
+                                {this.props.job.type === 'move' ? 'Moving: ' : 'Haul for: '}
+                                {this.props.job.passenger.username}
                             </Text>
                             <Text style={styles.jobText}>
-                                {this.props.address + '\n'}
-                                {this.props.description}
+                                {this.props.job.num_boxes + 'Rooms \n'}
+                                {this.props.job.start_time + " - " + this.props.job.end_time + "\n"}
+                                {this.props.job.description}
                             </Text>
                         </View>
                         <View style={styles.price}>
                             <Text style={styles.priceText}>
-                                {this.props.bid}
+                                {this.props.job.max_price}
                             </Text>
                         </View>
                    </TouchableOpacity>
                </View>
+	)
 }
 
 const styles = StyleSheet.create({

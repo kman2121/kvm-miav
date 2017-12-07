@@ -25,9 +25,11 @@ export class SearchingScreen extends React.Component {
 	}
 
 	loadJobs() {
-		var jobs = [];
-		for (let i = 1; i < 7; i++) {
-			jobs.push(<JobItem pressAction={() => console.log(i.toString())} address={"321 Royal Oak Lane"} distance={"3 miles"} bid={"$23"} description={"Started From Tha Bottom"}/>);
+		jobs = []
+		for (let i = 0; i < this.props.jobs.length; i++) {
+			if (this.props.jobs[i].status == 'pending') {
+				jobs.push(<JobItem pressAction={() => this.props.switchScreen(this.props.jobs[i].id)} job={this.prop.jobs[i]}/>);
+			}
 		}
 		this.setState({
 			dataSource: this.state.dataSource.cloneWithRows(jobs)
