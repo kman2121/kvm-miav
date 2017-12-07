@@ -19,8 +19,7 @@ export class JunkRequest extends React.Component {
 		isDateTimePickerVisible: false,
 		startTime: "            ",
 		maxPrice: "0",
-		description: "",
-		searching: false
+		description: ""
 	};
 
 	_hideDateTimePicker = () => this.setState({
@@ -34,8 +33,7 @@ export class JunkRequest extends React.Component {
 	};
 
 	_submitJob = () => {
-		console.log(this.state);
-		this.setState({searching: true});
+		this.props.submitJob('haul', this.state.startTime, this.state.rooms, this.state.maxPrice, this.state.description, undefined);
 	}
 
 	_handleDatePicked = (date) => {
@@ -67,17 +65,6 @@ export class JunkRequest extends React.Component {
                             onConfirm={this._handleDatePicked}
                             onCancel={this._hideDateTimePicker}
                             value={this.state.startTime}/>
-            <Modal visible={this.state.searching}
-                   onRequestClose={(text) => this.setState({searching: false})}
-                   transparent={true}
-                   style={styles.modalstyle}>
-                <View style={styles.modalstyle}>
-                    <View style={styles.modalbox}>
-                        <Text style={{color: 'white'}}>Searching for MIAVs near you...</Text>
-                        <ActivityIndicator animating={this.props.searching} size={'large'}/>
-                    </View>
-                </View>
-            </Modal>
 			<View style={styles.row}>
 				<Text style={styles.itemTitle}>Number of Parcels:</Text>
 				<Picker style={{

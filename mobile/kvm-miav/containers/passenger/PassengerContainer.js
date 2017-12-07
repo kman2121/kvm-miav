@@ -27,6 +27,11 @@ export class PassengerContainer extends React.Component {
     this.setState({ jobs: jobs });
   }
 
+  submitJob = async (job_type, start_time, num_boxes, max_price, description, end_time) => {
+    const success = api.createJob(job_type, start_time, num_boxes, max_price, description, end_time);
+    console.log(success);
+  }
+
   render() {
     let screenToShow;
     switch (this.state.screen) {
@@ -35,7 +40,7 @@ export class PassengerContainer extends React.Component {
         break;
       case ScreenEnum.ENTER_JOB:
       default:
-        screenToShow = <EnterJobScreen />;
+        screenToShow = <EnterJobScreen submitJob={this.submitJob} />;
         break;
     }
 
