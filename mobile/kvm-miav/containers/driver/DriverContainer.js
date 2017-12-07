@@ -26,7 +26,7 @@ export class DriverContainer extends React.Component {
 		this.state = {
 			screen: ScreenEnum.SEARCHING,
 			jobs: [],
-			jobLoc: []
+			job: {}
 		};
 	}
 
@@ -37,10 +37,20 @@ export class DriverContainer extends React.Component {
 		});
 	}
 
-	switchScreen = (jobloc) => {
+	switchDirections = async (job) => {
+		const success = await api.changeJobStatus(job.id, 'in_progress');
+		if (success) {
+			this.setState({
+				screen: ScreenEnum.DIRECTIONS,
+				job: job
+			});
+		}
+	}
+
+	switchSearch() {
 		this.setState({
-			screen: ScreenEnum.DIRECTIONS,
-			jobLoc: jobloc
+			screen: ScreenEnum.SEARCHING,
+			job: {}
 		});
 	}
 
@@ -48,11 +58,11 @@ export class DriverContainer extends React.Component {
 		let screenToShow;
 		switch (this.state.screen) {
 			case ScreenEnum.DIRECTIONS:
-				screenToShow = <DirectionScreen jobLoc={this.state.jobLoc}/>;
+				screenToShow = <DirectionScreen jobLoc={this.state.job.job_loc} jobId={this.state.job.id} switchScreen={this.switchSearch}/>;
 				break;
 			case ScreenEnum.SEARCHING:
 			default:
-				screenToShow = <SearchingScreen jobs={this.state.jobs} switchScreen={this.switchScreen}/>;
+				screenToShow = <SearchingScreen jobs={this.state.jobs} switchScreen={this.switchDirections}/>;
 				break;
 		}
 

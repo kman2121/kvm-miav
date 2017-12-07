@@ -45,6 +45,11 @@ export class DirectionScreen extends React.Component {
 		}
 	}
 
+	async markDone() {
+		const success = await api.changeJobStatus(this.props.jobId, 'completed');
+		this.props.switchScreen();
+	}
+
 	render() {
 		console.log({
 			latitude: parseFloat(this.props.jobLoc[0]),
@@ -82,7 +87,7 @@ export class DirectionScreen extends React.Component {
                     }}
                   />
                 </MapView>
-                <Button color='red' title='Done With Job' onPress={console.log("Done")} />
+                <Button color='red' title='Done With Job' onPress={this.markDone()} />
               </View>
 		);
 	}
