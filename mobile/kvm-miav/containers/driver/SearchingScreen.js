@@ -24,7 +24,7 @@ export class SearchingScreen extends React.Component {
                         <Text style={styles.headerText}>Jobs Near You</Text>
                     </View>
                     <View style={styles.listviewContainer}>
-		                <ListView dataSource={ds} renderRow={(rowData) => rowData}/>
+		                <ListView enableEmptySections={true} dataSource={ds} renderRow={(rowData) => rowData}/>
                     </View>
             </View>
 		)
