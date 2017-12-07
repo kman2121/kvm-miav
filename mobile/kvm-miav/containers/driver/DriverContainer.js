@@ -30,11 +30,8 @@ export class DriverContainer extends React.Component {
 		};
 	}
 
-	async componentDidMount() {
-		const jobs = await api.getJobs();
-		this.setState({
-			jobs
-		});
+	componentDidMount() {
+		this.switchSearch();
 	}
 
 	switchDirections = async (job) => {
@@ -47,7 +44,12 @@ export class DriverContainer extends React.Component {
 		}
 	}
 
-	switchSearch() {
+	switchSearch = async () => {
+		const jobs = await api.getJobs();
+		this.setState({
+			jobs
+		});
+
 		this.setState({
 			screen: ScreenEnum.SEARCHING,
 			job: {}

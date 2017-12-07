@@ -9,7 +9,7 @@ import {
 	Location,
 	Permissions,
 } from 'expo';
-
+import * as api from '../../utils/api';
 import MapView from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 
@@ -45,9 +45,11 @@ export class DirectionScreen extends React.Component {
 		}
 	}
 
-	async markDone() {
+	markDone = async () => {
 		const success = await api.changeJobStatus(this.props.jobId, 'completed');
-		this.props.switchScreen();
+		if (success) {
+			this.props.switchScreen();
+		}
 	}
 
 	render() {
@@ -87,7 +89,7 @@ export class DirectionScreen extends React.Component {
                     }}
                   />
                 </MapView>
-                <Button color='red' title='Done With Job' onPress={this.markDone()} />
+                <Button color='red' title='Done With Job' onPress={this.markDone} />
               </View>
 		);
 	}
