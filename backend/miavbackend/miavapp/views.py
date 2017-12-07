@@ -140,7 +140,10 @@ class JobList(generics.ListCreateAPIView):
         if request.user.usertype != 'passenger':
             return HttpResponse('Only passengers may post jobs', status=status.HTTP_400_BAD_REQUEST)
 
-        data = request.data.dict()
+        if hasattr(request.data, 'dict'):
+            data = request.data.dict()
+        else:
+            data = request.data
         data['passenger'] = request.user.passenger.id
         data['status'] = 'pending'
         serializer = self.get_serializer(data=data)
