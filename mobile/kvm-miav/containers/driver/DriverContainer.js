@@ -32,7 +32,7 @@ export class DriverContainer extends React.Component {
 	async componentDidMount() {
 		const jobs = await api.getJobs();
 		this.setState({
-			job_loc
+			jobs
 		});
 	}
 

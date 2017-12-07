@@ -24,8 +24,8 @@ export default class App extends React.Component {
 		super(props);
 
 		this.state = {
-			container: ContainerEnum.DRIVER,
-			// container: ContainerEnum.AUTH,
+			// container: ContainerEnum.DRIVER,
+			container: ContainerEnum.AUTH,
 			user: null
 		};
 	}
