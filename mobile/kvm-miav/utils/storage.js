@@ -38,3 +38,11 @@ export const getUser = async () => {
     return null;
   }
 }
+
+export const clearUser = () => {
+  try {
+    AsyncStorage.multiRemove(['token', 'user']);
+  } catch (error) {
+    console.log(error);
+  }
+}

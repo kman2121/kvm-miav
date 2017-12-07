@@ -1,6 +1,6 @@
 import Expo from 'expo';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
 
 import { SearchingScreen } from './SearchingScreen';
 
@@ -11,7 +11,7 @@ class ScreenEnum {
 export class DriverContainer extends React.Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       screen: ScreenEnum.SEARCHING
     };
@@ -28,6 +28,7 @@ export class DriverContainer extends React.Component {
 
     return (
       <View style={styles.container}>
+        <Button title='Log Out' onPress={this.props.logout} />
         { screenToShow }
       </View>
     );

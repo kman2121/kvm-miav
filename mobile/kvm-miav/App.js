@@ -54,25 +54,44 @@ export default class App extends React.Component {
     }
   }
 
-  async login(username, password) {
+  login = async (username, password) => {
     const user = await api.login(username, password);
     if (user) {
       this.setUser(user);
     }
   }
 
+  registerPassenger = async (username, password, confirm_password, phone) => {
+    const user = await api.register(username, password, confirm_password, phone);
+    if (user) {
+      this.setUser(user);
+    }
+  }
+
+  registerDriver = async (username, phone, password, confirm_password, vehicle_year, vehicle_make, vehicle_model, vehicle_license) => {
+    const user = await api.register(username, phone, password, confirm_password, vehicle_year, vehicle_make, vehicle_model, vehicle_license);
+    if (user) {
+      this.setUser(user);
+    }
+  }
+
+  logout = () => {
+    storage.clearUser();
+    this.setState({container: ContainerEnum.AUTH});
+  }
+
   render() {
     let container;
     switch (this.state.container) {
       case ContainerEnum.DRIVER:
-        container = <DriverContainer />;
+        container = <DriverContainer logout={this.logout} />;
         break;
       case ContainerEnum.PASSENGER:
-        container = <PassengerContainer />;
+        container = <PassengerContainer logout={this.logout} />;
         break;
       case ContainerEnum.AUTH:
       default:
-        container = <AuthContainer />;
+        container = <AuthContainer login={this.login} />;
         break;
     }
 

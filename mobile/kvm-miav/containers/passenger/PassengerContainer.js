@@ -1,6 +1,6 @@
 import Expo from 'expo';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
 
 import { EnterJobScreen } from './EnterJobScreen';
 
@@ -11,7 +11,7 @@ class ScreenEnum {
 export class PassengerContainer extends React.Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       screen: ScreenEnum.ENTER_JOB,
 
@@ -30,6 +30,7 @@ export class PassengerContainer extends React.Component {
 
     return (
       <View style={styles.container}>
+        <Button title='Log Out' onPress={this.props.logout} />
         { screenToShow }
       </View>
     );

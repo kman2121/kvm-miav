@@ -6,19 +6,20 @@ import {
   Dimensions
 } from 'react-native';
 import {
-    TabViewAnimated,
-    TabBar,
-    SceneMap
+  TabViewAnimated,
+  TabBar,
+  SceneMap
 } from 'react-native-tab-view';
-import { MiniMap,
-    JunkRequest,
-    MoveRequest
+import { 
+  MiniMap,
+  JunkRequest,
+  MoveRequest
  } from '../../components';
 
- const initialLayout = {
-   height: 0,
-   width: Dimensions.get('window').width,
- };
+const initialLayout = {
+  height: 0,
+  width: Dimensions.get('window').width,
+};
 
 const FirstRoute = () => (<MoveRequest />);
 const SecondRoute = () => (<JunkRequest />);
