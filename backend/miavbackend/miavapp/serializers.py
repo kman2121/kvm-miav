@@ -3,10 +3,33 @@ from rest_framework import serializers
 
 from miavapp.models import *
 
+class VehicleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Vehicle
+        fields = ('id', 'year', 'make', 'model', 'license')
+
+class DriverLiteSerializer(serializers.ModelSerializer):
+    vehicle = VehicleSerializer(many=False, read_only=True)
+    # location = PointSerializer(lat=self.location_lat, lon=self.location_long)
+
+    class Meta:
+        model = Driver
+        fields = ('id', 'user', 'vehicle', 'location')
+        read_only_fields = ('user', 'vehicle')
+
+class PassengerLiteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Passenger
+        fields = ('id', 'user')
+        read_only_fields = ('user',)
+
 class UserSerializer(serializers.ModelSerializer):
+    driver = DriverLiteSerializer(many=False)
+    passenger = PassengerLiteSerializer(many=False)
+
     class Meta:
         model = User
-        fields = ('id', 'username', 'last_login', 'phone', 'usertype')
+        fields = ('id', 'username', 'last_login', 'phone', 'usertype', 'passenger', 'driver')
         read_only_fields = ('last_login',)
 
 class UserRegisterSerializer(serializers.ModelSerializer):
@@ -25,11 +48,6 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         model = get_user_model()
         fields = ('id', 'username', 'date_created', 'phone', 'password', 'confirm_password')
         read_only_fields = ('date_created',)
-
-class VehicleSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Vehicle
-        fields = ('id', 'year', 'make', 'model', 'license')
 
 class PassengerSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=False, read_only=True)

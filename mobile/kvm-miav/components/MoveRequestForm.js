@@ -21,8 +21,7 @@ export class MoveRequest extends React.Component {
 		startTime: "            ",
 		endTime: "            ",
 		maxPrice: "0",
-		description: "",
-		searching: false
+		description: ""
 	};
 
 	_showModal = () => {};
@@ -67,6 +66,10 @@ export class MoveRequest extends React.Component {
 			});
 		}
 	};
+
+	_submitJob = () => {
+		this.props.submitJob('move', this.state.startTime, this.state.rooms, this.state.maxPrice, this.state.description, this.state.endTime);
+	}
 
 	render() {
 		var pickeritems = [];
@@ -131,7 +134,7 @@ export class MoveRequest extends React.Component {
                     value={this.state.text}/>
 			</View>
             <View style={styles.row, {justifyContent: 'space-around'}}>
-                <Button style={styles.submit} title="SUBMIT" onPress={(text) => this.setState({searching: true})}></Button>
+                <Button style={styles.submit} title="SUBMIT" onPress={this._submitJob}></Button>
             </View>
 		</View>);
 	}

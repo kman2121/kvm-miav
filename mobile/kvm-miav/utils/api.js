@@ -158,9 +158,9 @@ export const getJobs = async () => {
     return null;
   }
 }
-
+  
 export const getJobsByPassenger = async (passengerId) => {
-  const url = `${API_ENDPOINT}/jobs/passenger=${passengerId}`;
+  const url = `${API_ENDPOINT}/jobs?passenger=${passengerId}`;
   const token = await storage.getToken();
   
   res = await fetch(url, {
