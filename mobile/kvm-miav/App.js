@@ -96,7 +96,7 @@ export default class App extends React.Component {
 				container = <DriverContainer logout={this.logout} />;
 				break;
 			case ContainerEnum.PASSENGER:
-				container = <PassengerContainer logout={this.logout} />;
+				container = <PassengerContainer logout={this.logout} currentUser={this.state.user} />;
 				break;
 			case ContainerEnum.AUTH:
 			default:

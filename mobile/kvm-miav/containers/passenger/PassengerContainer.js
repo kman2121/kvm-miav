@@ -2,10 +2,13 @@ import Expo from 'expo';
 import React from 'react';
 import { Button, StyleSheet, View } from 'react-native';
 
+import * as api from '../../utils/api';
 import { EnterJobScreen } from './EnterJobScreen';
+import { PassengerJobHistoryScreen } from './PassengerJobHistoryScreen';
 
 class ScreenEnum {
   static ENTER_JOB = 'ej';
+  static JOB_HIST = 'jh';
 }
 
 export class PassengerContainer extends React.Component {
@@ -14,14 +17,22 @@ export class PassengerContainer extends React.Component {
 
     this.state = {
       screen: ScreenEnum.ENTER_JOB,
-
+      jobs: [],
       isLoading: false
     };
+  }
+
+  async componentDidMount() {
+    const jobs = await api.getJobsByPassenger(this.props.user.passenger.id);
+    this.setState({ jobs: jobs });
   }
 
   render() {
     let screenToShow;
     switch (this.state.screen) {
+      case ScreenEnum.JOB_HIST:
+        screenToShow = <PassengerJobHistoryScreen jobs = {this.state.jobs} />
+        break;
       case ScreenEnum.ENTER_JOB:
       default:
         screenToShow = <EnterJobScreen />;
