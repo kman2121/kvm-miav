@@ -147,3 +147,20 @@ export const getJobs = async () => {
     return null;
   }
 }
+
+export const getJobsByPassenger = async (passengerId) => {
+  const url = `${API_ENDPOINT}/jobs/passenger=${passengerId}`;
+  res = await fetch(url, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json'
+    }
+  });
+
+  if (res.status === 200) {
+    return await res.json();
+  } else {
+    console.log(await res.text());
+    return null;
+  }
+}
