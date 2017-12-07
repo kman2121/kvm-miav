@@ -10,38 +10,21 @@ import {
 } from '../../components';
 
 export class SearchingScreen extends React.Component {
-	constructor(props) {
-		super(props);
-		var ds = new ListView.DataSource({
-			rowHasChanged: (r1, r2) => r1 !== r2
-		});
-		this.state = {
-			dataSource: ds
-		};
-	}
-
-	componentDidMount() {
-		this.loadJobs();
-	}
-
-	loadJobs() {
-		var jobs = [];
-		for (let i = 1; i < 7; i++) {
-			jobs.push(<JobItem pressAction={() => console.log(i.toString())} address={"321 Royal Oak Lane"} distance={"3 miles"} bid={"$23"} description={"Started From Tha Bottom"}/>);
-		}
-		this.setState({
-			dataSource: this.state.dataSource.cloneWithRows(jobs)
-		});
-	}
-
 	render() {
+		const jobItems = this.props.jobs.filter(job => job.status === 'pending').map(job => {
+			return <JobItem pressAction={() => this.props.switchScreen(job.job_loc)} job={job}/>;
+		});
+		const ds = new ListView.DataSource({
+			rowHasChanged: (r1, r2) => r1 !== r2
+		}).cloneWithRows(jobItems);
+
 		return (
 			<View style={styles.container}>
                     <View style={styles.header}>
                         <Text style={styles.headerText}>Jobs Near You</Text>
                     </View>
                     <View style={styles.listviewContainer}>
-		                <ListView dataSource={this.state.dataSource} renderRow={(rowData) => rowData}/>
+		                <ListView dataSource={ds} renderRow={(rowData) => rowData}/>
                     </View>
             </View>
 		)

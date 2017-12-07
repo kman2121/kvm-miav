@@ -1,45 +1,75 @@
 import Expo from 'expo';
 import React from 'react';
-import { Button, StyleSheet, View } from 'react-native';
+import {
+	StyleSheet,
+	View,
+	Button
+} from 'react-native';
 
-import { SearchingScreen } from './SearchingScreen';
+import * as api from '../../utils/api';
+import {
+	SearchingScreen,
+} from './SearchingScreen';
+import {
+	DirectionScreen,
+} from './DirectionScreen';
 
 class ScreenEnum {
-  static SEARCHING = 'sr';
+	static SEARCHING = 'sr';
+	static DIRECTIONS = 'dir';
 }
 
 export class DriverContainer extends React.Component {
-  constructor(props) {
-    super(props);
+	constructor(props) {
+		super(props);
 
-    this.state = {
-      screen: ScreenEnum.SEARCHING
-    };
-  }
+		this.state = {
+			screen: ScreenEnum.SEARCHING,
+			jobs: [],
+			jobLoc: []
+		};
+	}
 
-  render() {
-    let screenToShow;
-    switch (this.state.screen) {
-      case ScreenEnum.SEARCHING:
-      default:
-        screenToShow = <SearchingScreen />;
-        break;
-    }
+	async componentDidMount() {
+		const jobs = await api.getJobs();
+		this.setState({
+			jobs
+		});
+	}
 
-    return (
-      <View style={styles.container}>
-        <Button title='Log Out' onPress={this.props.logout} />
-        { screenToShow }
-      </View>
-    );
-  }
+	switchScreen = (jobloc) => {
+		this.setState({
+			screen: ScreenEnum.DIRECTIONS,
+			jobLoc: jobloc
+		});
+	}
+
+	render() {
+		let screenToShow;
+		switch (this.state.screen) {
+			case ScreenEnum.DIRECTIONS:
+				screenToShow = <DirectionScreen jobLoc={this.state.jobLoc}/>;
+				break;
+			case ScreenEnum.SEARCHING:
+			default:
+				screenToShow = <SearchingScreen jobs={this.state.jobs} switchScreen={this.switchScreen}/>;
+				break;
+		}
+
+		return (
+			<View style={styles.container}>
+                <Button title='Log Out' onPress={this.props.logout} />
+                { screenToShow }
+            </View>
+		);
+	}
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'stretch',
-    justifyContent: 'center'
-  },
+	container: {
+		flex: 1,
+		backgroundColor: '#fff',
+		alignItems: 'stretch',
+		justifyContent: 'center'
+	},
 });
