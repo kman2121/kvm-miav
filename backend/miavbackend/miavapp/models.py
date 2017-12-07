@@ -79,7 +79,7 @@ class Job(models.Model):
     num_boxes = models.IntegerField()
     description = models.TextField()
     job_type = models.CharField(max_length=4, validators=[validators.validate_job_type])
-    status = models.CharField(max_length=10, validators=[validators.validate_status])
+    status = models.CharField(max_length=20, validators=[validators.validate_status])
 
     job_loc_lat = models.FloatField()
     job_loc_long = models.FloatField()
