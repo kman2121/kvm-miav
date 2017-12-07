@@ -16,14 +16,14 @@ export class PassengerContainer extends React.Component {
     super(props);
 
     this.state = {
-      screen: ScreenEnum.ENTER_JOB,
+      screen: ScreenEnum.JOB_HIST,
       jobs: [],
       isLoading: false
     };
   }
 
   async componentDidMount() {
-    const jobs = await api.getJobsByPassenger(this.props.user.passenger.id);
+    const jobs = await api.getJobsByPassenger(this.props.currentUser.passenger.id);
     this.setState({ jobs: jobs });
   }
 
