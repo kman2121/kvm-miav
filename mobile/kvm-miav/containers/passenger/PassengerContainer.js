@@ -2,6 +2,7 @@ import Expo from 'expo';
 import React from 'react';
 import { Button, StyleSheet, View } from 'react-native';
 
+import * as api from '../../utils/api';
 import { EnterJobScreen } from './EnterJobScreen';
 
 class ScreenEnum {
@@ -13,10 +14,13 @@ export class PassengerContainer extends React.Component {
     super(props);
 
     this.state = {
-      screen: ScreenEnum.ENTER_JOB,
-
-      isLoading: false
+      screen: ScreenEnum.ENTER_JOB
     };
+  }
+
+  submitJob = async (job_type, start_time, num_boxes, max_price, description, end_time) => {
+    const success = api.createJob(job_type, start_time, num_boxes, max_price, description, end_time);
+    console.log(success);
   }
 
   render() {
@@ -24,7 +28,7 @@ export class PassengerContainer extends React.Component {
     switch (this.state.screen) {
       case ScreenEnum.ENTER_JOB:
       default:
-        screenToShow = <EnterJobScreen />;
+        screenToShow = <EnterJobScreen submitJob={this.submitJob} />;
         break;
     }
 

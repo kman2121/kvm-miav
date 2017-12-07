@@ -21,8 +21,8 @@ const initialLayout = {
   width: Dimensions.get('window').width,
 };
 
-const FirstRoute = () => (<MoveRequest />);
-const SecondRoute = () => (<JunkRequest />);
+const FirstRoute = () => (<MoveRequest submitJob={this.props.submitJob} />);
+const SecondRoute = () => (<JunkRequest submitJob={this.props.submitJob} />);
 
 export class EnterJobScreen extends React.PureComponent {
   state = {
