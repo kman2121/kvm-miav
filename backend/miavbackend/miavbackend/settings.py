@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_filters',
     'rest_framework',
 
     'miavapp'
@@ -85,8 +86,8 @@ DATABASES = {
         'NAME': 'kvdmiav',
         'USER': 'client',
         'PASSWORD': 'kvdmiav',
-        'HOST': '/cloudsql/cs5356-miav:us-east1:kvd-miav' if os.getenv('GAE_INSTANCE') else '127.0.0.1',
-        'PORT': 3306 if os.getenv('GAE_INSTANCE') else 3307
+        'HOST': '/cloudsql/cs5356-miav:us-east1:kvd-miav' if os.getenv('GAE_INSTANCE') else '35.185.124.195',
+        'PORT': 3306
     }
 }
 

@@ -76,12 +76,12 @@ class JobSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Job
-        fields = ('id', 'passenger', 'start_time', 'end_time', 'max_price', 'num_boxes', 'description', 'job_type', 'status')
+        fields = ('id', 'passenger', 'start_time', 'end_time', 'max_price', 'num_boxes', 'description', 'job_type', 'status', 'job_loc')
 
 class JobWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Job
-        fields = ('id', 'passenger', 'start_time', 'end_time', 'max_price', 'num_boxes', 'description', 'job_type', 'status')
+        fields = ('id', 'passenger', 'start_time', 'end_time', 'max_price', 'num_boxes', 'description', 'job_type', 'status', 'job_loc_lat', 'job_loc_long')
 
 class TripSerializer(serializers.ModelSerializer):
     driver = DriverSerializer(many=False)

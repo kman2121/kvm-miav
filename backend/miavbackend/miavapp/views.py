@@ -124,6 +124,9 @@ class PassengerDetail(generics.RetrieveUpdateDestroyAPIView):
 
 # Jobs
 class JobList(generics.ListCreateAPIView):
+    filter_backends = (filters.DjangoFilterBackend, )
+    filter_fields = ('passenger',)
+
     def get_queryset(self):
         return Job.objects.all()
 
