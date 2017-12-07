@@ -11,10 +11,12 @@ import {
 import MapView from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 
+const GOOGLE_MAPS_APIKEY = 'AIzaSyBDPfVApWIZPuJgZOOlMXMvnhvoRZ_mxFs';
+
 export class DirectionScreen extends React.Component {
 	constructor(props) {
 		super(props);
-		const GOOGLE_MAPS_APIKEY = 'AIzaSyBDPfVApWIZPuJgZOOlMXMvnhvoRZ_mxFs';
+
 		this.getCurrentLocation();
 		this.state = {
 			lat: 40.755644,
@@ -37,17 +39,19 @@ export class DirectionScreen extends React.Component {
 	}
 
 	render() {
+		console.log(this.props.jobLoc)
 		return (
 			<View style={styles.wrapper}>
         <MapView
           style={styles.map}
           customMapStyle={require('../../assets/gmap_style.json')}
-          region={{
-            latitude: this.state.lat,
-            longitude: this.state.lng,
-            latitudeDelta: 0.015,
-            longitudeDelta: 0.0121,
-          }}>
+        //   region={{
+        //     latitude: this.state.lat,
+        //     longitude: this.state.lng,
+        //     latitudeDelta: 0.015,
+        //     longitudeDelta: 0.0121,
+        // }}
+        >
           <MapViewDirections
             origin={{latitude: this.state.lat, longitude: this.state.lng}}
             destination={{latitude: this.props.jobLoc[0], longitude: this.props.jobLoc[1]}}

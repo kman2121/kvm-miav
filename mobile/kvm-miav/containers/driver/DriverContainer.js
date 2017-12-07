@@ -37,7 +37,7 @@ export class DriverContainer extends React.Component {
 		});
 	}
 
-	switchScreen(jobloc) {
+	switchScreen = (jobloc) => {
 		this.setState({
 			screen: ScreenEnum.DIRECTIONS,
 			jobLoc: jobloc
@@ -48,11 +48,11 @@ export class DriverContainer extends React.Component {
 		let screenToShow;
 		switch (this.state.screen) {
 			case ScreenEnum.DIRECTIONS:
-				screenToShow = <DirectionScreen jobloc={this.state.jobLoc}/>;
+				screenToShow = <DirectionScreen jobLoc={this.state.jobLoc}/>;
 				break;
 			case ScreenEnum.SEARCHING:
 			default:
-				screenToShow = <SearchingScreen jobs={this.state.jobs} switchScreen={()=>this.switchScreen()}/>;
+				screenToShow = <SearchingScreen jobs={this.state.jobs} switchScreen={this.switchScreen}/>;
 				break;
 		}
 
