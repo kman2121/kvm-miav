@@ -16,7 +16,7 @@ export class JobItem extends React.Component {
                     <TouchableOpacity style={styles.jobContainer} onPress={this.props.pressAction}>
                         <View style={styles.description}>
                             <Text style={styles.jobTitle}>
-                                {this.props.job.type === 'move' ? 'Moving: ' : 'Haul for: '}
+                                {this.props.job.job_type === 'move' ? 'Moving: ' : 'Haul for: '}
                                 {this.props.job.passenger.username}
                             </Text>
                             <Text style={styles.jobText}>

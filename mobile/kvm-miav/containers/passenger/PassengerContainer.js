@@ -18,20 +18,29 @@ export class PassengerContainer extends React.Component {
     this.state = {
       screen: ScreenEnum.JOB_HIST,
       jobs: [],
-      loading: false
+      loading: false,
+      intervalId: 0
     };
   }
 
   async componentDidMount() {
     this.goToJobHist();
+		const intervalId = setInterval(() => this.refreshJobs(), 15 * 1000);
+		this.setState({ intervalId });
+  }
+
+  refreshJobs = async () => {
+    const jobs = await api.getJobsByPassenger(this.props.currentUser.passenger.id);
+    this.setState({
+      jobs
+    });
   }
 
   goToCreateJob = () => this.setState({ screen: ScreenEnum.ENTER_JOB });
   goToJobHist = async () => {
     this.setState({ screen: ScreenEnum.JOB_HIST });
 
-    const jobs = await api.getJobsByPassenger(this.props.currentUser.passenger.id);
-    this.setState({ jobs });
+    this.refreshJobs();
   }
 
   submitJob = async (job_type, start_time, num_boxes, max_price, description, end_time) => {
@@ -72,6 +81,10 @@ export class PassengerContainer extends React.Component {
         { screenToShow }
       </View>
     );
+  }
+  
+  componentWillUnmount() {
+    clearInterval(this.state.intervalId);
   }
 }
 

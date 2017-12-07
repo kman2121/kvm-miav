@@ -13,6 +13,7 @@ import {
 import {
 	DirectionScreen,
 } from './DirectionScreen';
+import { setTimeout } from 'core-js/library/web/timers';
 
 class ScreenEnum {
 	static SEARCHING = 'sr';
@@ -26,12 +27,15 @@ export class DriverContainer extends React.Component {
 		this.state = {
 			screen: ScreenEnum.SEARCHING,
 			jobs: [],
-			job: {}
+			job: {},
+			intervalId: 0
 		};
 	}
 
 	componentDidMount() {
 		this.switchSearch();
+		const intervalId = setInterval(() => this.refreshJobs(), 15 * 1000);
+		this.setState({ intervalId });
 	}
 
 	switchDirections = async (job) => {
@@ -44,11 +48,15 @@ export class DriverContainer extends React.Component {
 		}
 	}
 
-	switchSearch = async () => {
+	refreshJobs = async () => {
 		const jobs = await api.getJobs();
 		this.setState({
 			jobs
 		});
+	}
+
+	switchSearch = async () => {
+		this.refreshJobs();
 
 		this.setState({
 			screen: ScreenEnum.SEARCHING,
@@ -74,6 +82,10 @@ export class DriverContainer extends React.Component {
                 { screenToShow }
             </View>
 		);
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.state.intervalId);
 	}
 }
 
