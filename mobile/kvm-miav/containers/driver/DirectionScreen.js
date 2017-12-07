@@ -9,17 +9,19 @@ import {
 } from 'expo';
 
 import MapView from 'react-native-maps';
+import MapViewDirections from 'react-native-maps-directions';
 
 export class DirectionScreen extends React.Component {
 	constructor(props) {
 		super(props);
-
+		const GOOGLE_MAPS_APIKEY = 'AIzaSyBDPfVApWIZPuJgZOOlMXMvnhvoRZ_mxFs';
 		this.getCurrentLocation();
 		this.state = {
 			lat: 40.755644,
 			lng: -73.956097
 		};
 	}
+
 
 	async getCurrentLocation() {
 		const {
@@ -46,10 +48,11 @@ export class DirectionScreen extends React.Component {
             latitudeDelta: 0.015,
             longitudeDelta: 0.0121,
           }}>
-          <MapView.Circle center={{latitude: this.state.lat, longitude: this.state.lng}}
-                          radius={100}
-                          strokeWidth={10}
-                          strokeColor={'rgba(200, 200, 255, .4)'} />
+          <MapViewDirections
+            origin={{latitude: this.state.lat, longitude: this.state.lng}}
+            destination={{latitude: this.props.jobLoc[0], longitude: this.props.jobLoc[1]}}
+            apikey={GOOGLE_MAPS_APIKEY}
+          />
         </MapView>
       </View>
 		);

@@ -28,7 +28,7 @@ export class SearchingScreen extends React.Component {
 		jobs = []
 		for (let i = 0; i < this.props.jobs.length; i++) {
 			if (this.props.jobs[i].status == 'pending') {
-				jobs.push(<JobItem pressAction={() => this.props.switchScreen(this.props.jobs[i].id)} job={this.prop.jobs[i]}/>);
+				jobs.push(<JobItem pressAction={() => this.props.switchScreen(this.props.jobs[i].job_loc)} job={this.prop.jobs[i]}/>);
 			}
 		}
 		this.setState({

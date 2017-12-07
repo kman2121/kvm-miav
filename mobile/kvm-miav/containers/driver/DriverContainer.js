@@ -25,21 +25,21 @@ export class DriverContainer extends React.Component {
 		this.state = {
 			screen: ScreenEnum.SEARCHING,
 			jobs: [],
-			currentJob: -1
+			jobLoc: []
 		};
 	}
 
 	async componentDidMount() {
 		const jobs = await api.getJobs();
 		this.setState({
-			jobs
+			job_loc
 		});
 	}
 
-	switchScreen(jobid) {
+	switchScreen(jobloc) {
 		this.setState({
 			screen: ScreenEnum.DIRECTIONS,
-			currentJob: jobid
+			jobLoc: jobloc
 		});
 	}
 
@@ -47,7 +47,7 @@ export class DriverContainer extends React.Component {
 		let screenToShow;
 		switch (this.state.screen) {
 			case ScreenEnum.DIRECTIONS:
-				screenToShow = <DirectionScreen jobid={this.state.currentJob}/>;
+				screenToShow = <DirectionScreen jobloc={this.state.jobLoc}/>;
 				break;
 			case ScreenEnum.SEARCHING:
 			default:
